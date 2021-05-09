@@ -19,6 +19,6 @@ public interface GeolocationController {
   @PostMapping(value = "/")
   void load(@RequestParam(value = "file", required = true) MultipartFile file) throws IOException;
 
-  @GetMapping(path = "/{ipValue}")
-  Set<GeolocationResponse> getGeolocationById(@PathVariable("ipValue") String ipValue);
+  @GetMapping(path = "/{ip}")
+  Set<GeolocationResponse> getGeolocationById(@PathVariable("ip") String ip);
 }

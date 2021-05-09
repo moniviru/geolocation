@@ -37,7 +37,7 @@ public class GeolocationUseCaseImpl implements GeolocationUseCase {
       if (ipDataList.isEmpty()) {
         throw new IpNotFoundException();
       } else {
-        return searchIpService.retrieveIpData(ip);
+        return ipDataList;
       }
     } else {
       throw new InvalidInputException("The Ip Address doesn't match with a valid Ip");

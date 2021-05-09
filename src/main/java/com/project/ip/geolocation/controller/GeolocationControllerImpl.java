@@ -23,8 +23,8 @@ public class GeolocationControllerImpl implements GeolocationController {
   }
 
   @Override
-  public Set<GeolocationResponse> getGeolocationById(String ipValue) {
-    return geolocationUseCase.getIpInfo(ipValue).stream()
+  public Set<GeolocationResponse> getGeolocationById(String ip) {
+    return geolocationUseCase.getIpInfo(ip).stream()
         .map(geolocation -> GeolocationModelMapper.map(geolocation)).collect(Collectors.toSet());
   }
 }
