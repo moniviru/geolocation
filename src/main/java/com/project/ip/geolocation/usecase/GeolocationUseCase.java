@@ -10,5 +10,5 @@ public interface GeolocationUseCase {
 
   void load(MultipartFile file) throws IOException;
 
-  Set<GeolocationModel> getIpInfo(String decimalIp);
+  Set<GeolocationModel> getIpInfo(String ip);
 }

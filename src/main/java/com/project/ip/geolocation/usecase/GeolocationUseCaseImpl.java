@@ -1,21 +1,18 @@
 package com.project.ip.geolocation.usecase;
 
 import com.project.ip.geolocation.exception.InvalidInputException;
+import com.project.ip.geolocation.exception.IpNotFoundException;
 import com.project.ip.geolocation.model.GeolocationModel;
 import com.project.ip.geolocation.service.process.ProcessFileService;
 import com.project.ip.geolocation.service.search.SearchIpService;
 import com.project.ip.geolocation.util.FileValidationUtil;
+import com.project.ip.geolocation.util.IpValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class GeolocationUseCaseImpl implements GeolocationUseCase {
@@ -34,7 +31,16 @@ public class GeolocationUseCaseImpl implements GeolocationUseCase {
     }
   }
 
-  public Set<GeolocationModel> getIpInfo(String decimalIp) {
-    return searchIpService.retrieveIpData(decimalIp);
+  public Set<GeolocationModel> getIpInfo(String ip) {
+    if (IpValidationUtil.validateIp(ip)) {
+      Set<GeolocationModel> ipDataList = searchIpService.retrieveIpData(ip);
+      if (ipDataList.isEmpty()) {
+        throw new IpNotFoundException();
+      } else {
+        return searchIpService.retrieveIpData(ip);
+      }
+    } else {
+      throw new InvalidInputException("The Ip Address doesn't match with a valid Ip");
+    }
   }
 }
